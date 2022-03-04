@@ -1,5 +1,6 @@
 #include <vector>
 #include <algorithm>
+#include <unordered_set>
 using namespace std;
 /**
  *
@@ -217,5 +218,141 @@ public:
         reverse(nums.begin(), nums.begin() + len - k);
         reverse(nums.begin()+ len - k, nums.end());
         reverse(nums.begin(), nums.end());
+    }
+    /**
+     * 283: move zeros. no copy.
+     * @param nums
+     */
+    void moveZeroes(vector<int>& nums) {
+        int len = nums.size();
+        if (len == 1) {
+            return;
+        }
+        int i = 0;
+        while (i < len && nums[i] != 0) i++;
+        int pit = i;
+        for(i++; i < len; i++) {
+            int now = nums[i];
+            if(now != 0) {
+                nums[pit] = now;
+                pit++;
+            }
+        }
+        for(; pit < len; pit++) nums[pit] = 0;
+    }
+    /**
+     * 167: two sum input array is sorted
+     * @param numbers
+     * @param target
+     * @return <index1, index2> begin from 1
+     */
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int j = numbers.size() - 1, i = 0;
+        vector<int> sumV;
+        while(i < j) {
+            int sum = numbers[i] + numbers[j];
+            if(sum < target) {
+                i++;
+            } else if (sum == target) {
+                sumV.push_back(i + 1);
+                sumV.push_back(j + 1);
+                return sumV;
+            } else {
+                j--;
+            }
+        }
+        return sumV;
+    }
+    /**
+     * 344: reverse string. storage: O(1). NOT reverse
+     * @param s
+     */
+    void reverseString(vector<char>& s) {
+        int left = 0, right = s.size() - 1;
+        while (left < right) {
+            swap(s[left], s[right]);
+            left++;
+            right--;
+        }
+    }
+    /**
+     * 557: reverse words in a string
+     * @param s
+     * @return
+     */
+    string reverseWords(string s) {
+        int l = 0, r = 0, len = s.length(), space = 0;
+        bool stop = true;
+        while(stop) {
+            while(r < len && s[r++] != ' ');// last word won't execute r++
+            if (r < len) space = r--; // r is ' '
+            else stop = false;
+            while(l < r) {
+                swap(s[l++], s[--r]);
+            }
+            l = space;
+            r = l + 1;
+        }
+        return s;
+    }
+
+ /* Definition for singly-linked list.
+  * 876: middle of the linked list
+  */
+  struct ListNode {
+      int val;
+      ListNode *next;
+      ListNode() : val(0), next(nullptr) {}
+      ListNode(int x) : val(x), next(nullptr) {}
+      ListNode(int x, ListNode *next) : val(x), next(next) {}
+  };
+
+    ListNode* middleNode(ListNode* head) {
+        ListNode* middle = head, *end = head;
+        while (end->next != nullptr) {
+            end = end->next->next;
+            middle = middle->next;
+            if (end == nullptr) {
+                break;
+            }
+        }
+        return middle;
+    }
+    /**
+     * 19: remove n-th node from the end
+     * @param head
+     * @param n
+     * @return head
+     */
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        int len = 1;
+        ListNode* deleteNode = head, *endNode = head;
+        if (head == nullptr) return head;
+        if (endNode->next == nullptr && n == 1) return nullptr;
+        while (endNode->next != nullptr) {
+            endNode = endNode->next;
+            len++;
+            if (len > n + 1) {
+                deleteNode = deleteNode->next;
+            }
+        }
+        if (len == n) {
+            head = head->next;
+        }
+        deleteNode->next = deleteNode->next->next;
+        return head;
+    }
+    /**
+     * 3: longest substring without repeating characters
+     * @param s
+     * @return
+     */
+    int lengthOfLongestSubstring(string s) {
+        int left = 0, right = 1;
+        int len = right - left;
+        while (right < s.length()) {
+
+       }
+        return len;
     }
 };

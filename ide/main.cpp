@@ -1,12 +1,16 @@
 #include <iostream>
 #include "binarySearch.h"
+#include "SolutionDS.h"
+#include "offer.h"
 int main() {
 
-    Solution a;
-    std::vector<int> v{1,2,3,4,5,6,7};
-
-    a.rotate(v, 8);
-    std::cout << v[0] << std::endl;
+    MinStack a;
+    a.push(0);
+    a.push(1);
+    a.push(0);
+    a.min();
+    a.pop();
+    int b = a.min();
 
     return 0;
 }
